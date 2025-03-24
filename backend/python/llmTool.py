@@ -1,9 +1,17 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
+# 全局变量缓存模型和tokenizer
+_model = None
+_tokenizer = None
+
+def load_model():
+    global _model, _tokenizer
+    if _model is None or _tokenizer is None:
+        model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+        _tokenizer = AutoTokenizer.from_pretrained(model_name)
+        _model = AutoModelForCausalLM.from_pretrained(model_name)
+    return _model, _tokenizer
 
 # 设置对话历史管理参数
 max_history_length = 4  # 保留最近4轮对话
@@ -43,6 +51,7 @@ def truncate_history(history, tokenizer, max_length):
 # ai回复
 def chat(input='',knowledage:list[str]=None):
     global dialogue_history
+    model, tokenizer = load_model()
     if not input.strip():
         return print("请输入有效内容")
     

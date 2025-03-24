@@ -137,7 +137,7 @@ export function httpRequest(option: Option):Promise<any> {
                 response.config.requestId = requestId
                 return {data:response.data,cookies:''}
             }).catch((err) => {
-                logger.error(err.message)
+                console.error(err.message)
                 return Promise.reject(err)
             })
         }

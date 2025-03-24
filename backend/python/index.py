@@ -26,11 +26,21 @@ def query_knowledge_base(user_query):
     response = chat(user_query,documents)
     return response
 
+
 if __name__ == "__main__":
+    print("知识库问答系统")
+    print("输入 'exit' 退出")
+    
     while True:
-        user_query = input("请输入您的问题（输入'退出'结束）：")
-        if user_query.lower() in ['退出', 'exit']:
-            break
+        try:
+            query = input("\n请输入您的问题：")
+            if query.lower() == "exit":
+                print("退出系统")
+                break
+                
+            response = query_knowledge_base(query)
+            print("\n回答：")
+            print(response)
             
-        answer = query_knowledge_base(user_query)
-        print("\n" + "="*50 + "\n")
+        except Exception as e:
+            print(f"发生错误：{str(e)}")

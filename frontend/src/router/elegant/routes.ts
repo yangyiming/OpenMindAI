@@ -40,6 +40,16 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'chat',
+    path: '/chat',
+    component: 'layout.base$view.chat',
+    meta: {
+      title: 'chat',
+      i18nKey: 'route.chat',
+      icon: 'cryptocurrency:chat'
+    }
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',
@@ -79,7 +89,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.user-file',
     meta: {
       title: 'user-file',
-      i18nKey: 'route.user-file'
+      i18nKey: 'route.user-file',
+      icon: 'game-icons:gift-of-knowledge'
     }
   }
 ];

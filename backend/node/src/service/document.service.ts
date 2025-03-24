@@ -7,6 +7,10 @@ import * as mammoth from 'mammoth';
 import { v4 as uuidv4 } from 'uuid';
 import { File } from '@koa/multer';
 import { ObjectId } from 'mongodb';
+import axios from 'axios';
+import { httpRequest } from '@/utils/request';
+const { PYTHON_SERVER } = process.env;
+
 
 export class DocumentService {
   private readonly uploadPath = path.join(__dirname, '../../uploads');
@@ -32,8 +36,20 @@ export class DocumentService {
     document.size = file.size;
     document.content = file.buffer.toString();
     document.version = 1;
-
-    return this.documentRepository.save(document);
+    // 保存文档
+    const savedDocument = await this.documentRepository.save(document);
+    // 调用Python服务的/embed接口
+    const embedData = [{
+      id: savedDocument.id.toString(),
+      content: document.content,
+      source: document.name
+    }];
+    await httpRequest({
+      url: `${PYTHON_SERVER}/embed`,
+      data: embedData,
+      method:'POST'
+    })
+    return savedDocument;
   }
 
   async reuploadFile(id: number, file: File): Promise<Document> {

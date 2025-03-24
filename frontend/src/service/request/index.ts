@@ -17,6 +17,7 @@ interface InstanceState {
 export const request = createFlatRequest<App.Service.Response, InstanceState>(
   {
     baseURL,
+    timeout: 300000, // 5 minutes timeout
     headers: {
       // 'Content-Type': 'application/json'
       // apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2'

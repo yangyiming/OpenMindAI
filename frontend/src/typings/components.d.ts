@@ -11,6 +11,7 @@ declare module 'vue' {
     ArticleEditor: typeof import('./../components/common/article-editor.vue')['default']
     BetterScroll: typeof import('./../components/custom/better-scroll.vue')['default']
     ButtonIcon: typeof import('./../components/custom/button-icon.vue')['default']
+    Chat: typeof import('./../components/custom/Chat.vue')['default']
     CountTo: typeof import('./../components/custom/count-to.vue')['default']
     CustomPagin: typeof import('./../components/common/custom-pagin.vue')['default']
     DarkModeContainer: typeof import('./../components/common/dark-mode-container.vue')['default']

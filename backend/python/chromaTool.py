@@ -2,17 +2,27 @@ import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 import os
 from transformers import AutoTokenizer,AutoConfig
-# 加载默认的分词器（与 SentenceTransformer 的默认模型一致）
-# model_name = "bert-base-chinese"
-# model_name = "sentence-transformers/all-MiniLM-L6-v2"
-model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-config = AutoConfig.from_pretrained(model_name)
-# 获取上下文最大的token长度
-max_length = config['max_position_embeddings']
+
+# 全局变量缓存tokenizer和config
+_tokenizer = None
+_config = None
+_max_length = None
+
+def load_tokenizer():
+    global _tokenizer, _config, _max_length
+    if _tokenizer is None or _config is None:
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+        _tokenizer = AutoTokenizer.from_pretrained(model_name)
+        _config = AutoConfig.from_pretrained(model_name)
+        # 获取上下文最大的token长度
+        config_dict = _config.to_dict()
+        _max_length = config_dict['max_position_embeddings']
+    return _tokenizer, _config, _max_length
 # 获取集合名称 或者创建集合
 def getCollection(collectionName:str):
+  tokenizer, config, max_length = load_tokenizer()
   # Initialize embedding function
+  model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
   embedding_function = SentenceTransformerEmbeddingFunction(model_name=model_name)
   # 创建一个新的数据库或连接到已存在的数据库
   client = chromadb.Client()
@@ -43,6 +53,7 @@ def getCollection(collectionName:str):
 # 通过encode_plus()的max_length和truncation=True参数，利用Hugging Face内置的截断策略，比手动切片更安全可靠
 def truncate_text(text: str) -> str:
     """截断文本至指定token数（基于特定分词器）"""
+    tokenizer, config, max_length = load_tokenizer()
     # 编码时添加return_overflowing_tokens可查看溢出部分（可选）
     encoded = tokenizer.encode_plus(
         text,
@@ -62,6 +73,7 @@ def split_document_into_token_chunks(document: str) -> list:
     :param chunk_size: 每个块的token数（默认128）
     :return: 切分后的块列表
     """
+    tokenizer, config, max_length = load_tokenizer()
     # 1. 将文档拼接成一个长字符串
     full_text = document
     

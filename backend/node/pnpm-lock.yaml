@@ -27,7 +27,7 @@ importers:
         specifier: ^2.1657.0
         version: 2.1692.0
       axios:
-        specifier: ^1.7.3
+        specifier: ^1.8.3
         version: 1.8.3
       bcrypt:
         specifier: ^5.1.1
