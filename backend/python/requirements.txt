@@ -1,0 +1,14 @@
+chromadb==0.6.3
+numpy==1.26.4
+sentence_transformers==3.4.1
+load_dotenv==0.1.0
+langchain-deepseek-official==0.1.0
+transformers==4.49.0
+peft==0.14.0
+datasets==3.3.2
+torch==2.2.2
+accelerate==1.4.0
+torchvision==0.17.2
+torchaudio==2.2.2
+mysql-connector-python==9.2.0
+langchain-core===0.3.45
