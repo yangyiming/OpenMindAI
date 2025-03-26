@@ -53,7 +53,9 @@ def chat(input='',knowledage:list[str]=None):
     global dialogue_history
     model, tokenizer = load_model()
     if not input.strip():
-        return print("请输入有效内容")
+        str = "请输入有效内容"
+        print(str)
+        return str
     
     # 添加用户输入到临时历史（等待生成回复）
     temp_history = dialogue_history + [(input, "")]
@@ -67,7 +69,9 @@ def chat(input='',knowledage:list[str]=None):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     token_size = inputs['input_ids'].size(1)  # 获取 token 的大小
     if(token_size > max_length):
-        return print('token不能超过'+max_length)
+        str = 'token不能超过'+max_length
+        print(str)
+        return str
     outputs = model.generate(
         **inputs,
         max_new_tokens=500,
@@ -87,3 +91,4 @@ def chat(input='',knowledage:list[str]=None):
     
     # 打印AI回复
     print(f"\n助手：{new_response}")
+    return new_response

@@ -3,8 +3,6 @@ import axios, { CancelTokenSource } from 'axios'
 import { ProxyAgent, request } from 'undici'
 import { v4 as uuidv4 } from 'uuid';
 
-
-
 export type Option = {
     url: string
     method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH'
@@ -50,23 +48,18 @@ export function httpRequest(option: Option):Promise<any> {
     if (option.data) {
         requestObj.data = option.data
     }
-   
-
     // config cancel token
     const requestId = uuidv4();
-
     // 创建一个新的 AbortController 实例
     const controller = new AbortController();
     const signal = controller.signal;
     requestObj.signal = signal
     cancelTokenSourceMap.set(requestId, controller);
-
     return axios({
         url: targetUrl,
         ...requestObj
     }).then((response:any) => {
         return response
     })
-
 }
 
