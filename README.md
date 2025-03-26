@@ -64,11 +64,11 @@ OpenMindAI is a knowledge base system framework based on RAG (Retrieval-Augmente
 
    # Start Node.js service
    cd backend/node
-   yarn start
+   pnpm dev
 
    # Start Python AI service
    cd backend/python
-   python index.py
+   python app.py
    ```
 
 ## API Documentation
