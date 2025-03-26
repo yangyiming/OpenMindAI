@@ -12,6 +12,7 @@ node_modules
 dist-ssr
 *.local
 __pycache__
+chroma_db
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
