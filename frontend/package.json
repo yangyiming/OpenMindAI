@@ -32,8 +32,6 @@
     "build:test": "vite build --mode test",
     "cleanup": "sa cleanup",
     "commit": "sa git-commit",
-    "deploy:prod": "npm run build && wrangler pages deploy dist --branch=main",
-    "deploy:test": "npm run build:test && wrangler pages deploy dist --branch=develop",
     "dev": "vite --mode dev",
     "dev:prod": "vite --mode prod",
     "gen-route": "sa gen-route",
@@ -48,6 +46,7 @@
     "@better-scroll/core": "2.5.1",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.1",
+    "@iconify/utils": "^2.3.0",
     "@iconify/vue": "4.1.1",
     "@sa/axios": "workspace:*",
     "@sa/color-palette": "workspace:*",
@@ -107,13 +106,6 @@
     "vue-eslint-parser": "9.4.2",
     "vue-tsc": "2.0.13",
     "wrangler": "^3.0.0"
-  },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm sa git-commit-verify",
-    "pre-commit": "pnpm typecheck && pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix --no-warn-ignored"
   },
   "website": "https://admin.soybeanjs.cn"
 }
