@@ -1,12 +1,12 @@
-# from llm.openai_api_llm import OpenAIApiLLM
-from llm.deepseek_llm import DeepSeekLLM
+from llm.openai_api_llm import OpenAIApiLLM
+# from llm.deepseek_llm import DeepSeekLLM
 
 # 初始化OpenAI LLM
-# llm = OpenAIApiLLM()
-# conversation = llm.create_conversation_chain()
+llm = OpenAIApiLLM()
+conversation = llm.create_conversation_chain()
 
-llm = DeepSeekLLM()
-conversation = DeepSeekLLM().create_conversation_chain()
+# llm = DeepSeekLLM()
+# conversation = DeepSeekLLM().create_conversation_chain()
 
 
 # ai回复

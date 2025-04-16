@@ -6,8 +6,7 @@ import torch
 accelerator = Accelerator()
 
 # 1. 加载基础模型
-# model_name = "deepseek-ai/deepseek-llm-7b-base"
-model_name = "microsoft/phi-2"
+model_name = "deepseek-ai/deepseek-llm-7b-base"
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     device_map="auto",
@@ -32,8 +31,23 @@ model.print_trainable_parameters()  # 显示可训练参数占比
 dataset = load_dataset("json", data_files="train_data.json")["train"]
 
 def format_fn(example):
-    text = f"Instruction: {example['instruction']}\nResponse: {example['response']}"
-    return tokenizer(text, truncation=True, max_length=512)
+      # 更清晰的模板 + 添加EOS Token
+    text = (
+        "### Instruction:\n{instruction}\n\n"
+        "### Response:\n{response}{eos_token}"
+    ).format(
+        instruction=example["instruction"],
+        response=example["response"],
+        eos_token=tokenizer.eos_token  # 明确结束
+    )
+    
+    # 分词时统一处理
+    return tokenizer(
+        text,
+        truncation=True,
+        max_length=512,
+        padding="max_length"  # 保证批量训练时长度一致
+    )
 
 dataset = dataset.map(format_fn, batched=True)
 

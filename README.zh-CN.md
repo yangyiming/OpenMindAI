@@ -18,6 +18,7 @@ OpenMindAI 是一个基于 RAG (Retrieval-Augmented Generation) 的知识库系�
 - **Python**:
   - ChromaDB 向量数据库
   - Transformer 预训练模型
+  - OpenAi Compatible
   - 上下文对话管理
 
 ## 项目结构
